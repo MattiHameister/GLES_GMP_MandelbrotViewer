@@ -1,0 +1,34 @@
+cmake_minimum_required(VERSION 2.8)
+
+project(MandelbrotNT)
+
+LIST(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/CMakeTests")
+
+set(CMAKE_C_FLAGS "-g -O2 -std=c++14 -march=native -Wall")
+set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS}")
+
+find_package(SDL2 REQUIRED)
+find_package(GLESv2 REQUIRED)
+
+#find GMP-Library
+find_path(GMP_INCLUDE_DIR NAMES gmp.h )
+find_library(GMP_LIBRARIES NAMES gmp libgmp )
+
+include(FindPackageHandleStandardArgs)
+FIND_PACKAGE_HANDLE_STANDARD_ARGS(GMP DEFAULT_MSG GMP_INCLUDE_DIR GMP_LIBRARIES)
+
+INCLUDE_DIRECTORIES(${GMP_INCLUDE_DIR})
+#end find
+
+if(SDL2_FOUND)
+  INCLUDE_DIRECTORIES(${SDL2_INCLUDE_DIR})
+endif()
+
+set(EXECUTABLE_OUTPUT_PATH "${PROJECT_SOURCE_DIR}/build/")
+
+FILE(GLOB_RECURSE SRCS "${PROJECT_SOURCE_DIR}/src/*.cpp")
+FILE(GLOB_RECURSE HDRS "${PROJECT_SOURCE_DIR}/src/*.hpp")
+
+add_executable(${PROJECT_NAME} ${SRCS} ${HDRS})
+target_link_libraries ( ${PROJECT_NAME} ${GLESv2_LIBRARIES} ${SDL2_LIBRARY} ${GMP_LIBRARIES})
+#${Boost_LIBRARIES}

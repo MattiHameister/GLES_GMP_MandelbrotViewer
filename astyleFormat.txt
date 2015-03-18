@@ -1,0 +1,6 @@
+mode=c
+style=stroustrup
+indent=spaces=2
+indent-switches
+suffix=none
+lineend=linux
