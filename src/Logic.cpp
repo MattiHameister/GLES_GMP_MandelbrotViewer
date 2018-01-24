@@ -3,6 +3,7 @@
 #include <cmath>
 #include "Calculator.hpp"
 #include <thread>
+#include <functional>
 
 Logic::Logic()
 {

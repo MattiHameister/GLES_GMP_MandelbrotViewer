@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 2.8)
 
-project(MandelbrotNT)
+project(GLES_GMP_MandelbrotViewer)
 
 LIST(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/CMakeTests")
 
-set(CMAKE_C_FLAGS "-g -O2 -std=c++14 -march=native -Wall")
+set(CMAKE_C_FLAGS "-g -Og -std=c++17 -Wall")
 set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS}")
 
 find_package(SDL2 REQUIRED)

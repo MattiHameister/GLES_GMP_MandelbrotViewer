@@ -2,11 +2,11 @@
 #include "SDL_opengles2.h"
 #include <cmath>
 
-#define STRINGIFY(A)  #A
+#define STRINGIFY(version,A) "#version " #version "\n" #A
 
 
 //##################### SHADER #####################
-GLchar vShaderStr[]=STRINGIFY(
+GLchar vShaderStr[]=STRINGIFY(110,
 attribute vec4 vPosition;
 uniform mat4 Projection;
 uniform mat4 Model;
@@ -16,7 +16,7 @@ void main()
 });
 
 
-GLchar fShaderStr[] = STRINGIFY(
+GLchar fShaderStr[] = STRINGIFY(110,
 //precision mediump float;
 
 uniform int iter[64*64];
@@ -26,37 +26,37 @@ vec3 get_color(int value)
 {
   vec3 start;
   vec3 end;
-  vec3 count = vec3(500.0f);
+  vec3 count = vec3(500.0);
   vec3 weight;
   vec3 pos;
 
-  int val = int(mod(value, count.x+1.0f));
+  int val = int(mod(float(value), count.x+1.0));
 
   // calculate gradiant value
   vec3 color;
   if(val <= int(count.x*0.15)) {
-    start  = vec3(1.0f, 1.0f, 1.0f);
-    end    = vec3(1.0f, 0.8f, 0.0f);
+    start  = vec3(1.0, 1.0, 1.0);
+    end    = vec3(1.0, 0.8, 0.0);
     weight = vec3(count.x*0.15);
     pos    = vec3(0);
   } else if (val <= int(count.x*0.49)) {
-    start  = vec3(1.0f, 0.8f, 0.0f);
-    end    = vec3(0.53f, 0.12f, 0.075f);
+    start  = vec3(1.0, 0.8, 0.0);
+    end    = vec3(0.53, 0.12, 0.075);
     weight = vec3(count.x*0.34);
     pos    = vec3(count.x*0.15);
   } else if (val <= int(count.x*0.67)) {
-    start  = vec3(0.53f, 0.12f, 0.075f);
-    end    = vec3(0.0f, 0.0f, 0.6f);
+    start  = vec3(0.53, 0.12, 0.075);
+    end    = vec3(0.0, 0.0, 0.6);
     weight = vec3(count.x*0.18);
     pos    = vec3(count.x*0.49);
   } else if (val <= int(count.x*0.85)) {
-    start  = vec3(0.0f, 0.0f, 0.6f);
-    end    = vec3(0.0f, 0.4f, 1.0f);
+    start  = vec3(0.0, 0.0, 0.6);
+    end    = vec3(0.0, 0.4, 1.0);
     weight = vec3(count.x*0.18);
     pos    = vec3(count.x*0.67);
   } else if (val <= int(count.x)) {
-    start  = vec3(0.0f, 0.4f, 1.0f);
-    end    = vec3(1.0f, 1.0f, 1.0f);
+    start  = vec3(0.0, 0.4, 1.0);
+    end    = vec3(1.0, 1.0, 1.0);
     weight = vec3(count.x*0.15);
     pos    = vec3(count.x*0.85);
   }
